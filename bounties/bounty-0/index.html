@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        background-color: black;
+      }
+      /* Style for the segmented seekbar container */
+      .seekbar-container {
+        width: 100%;
+        height: 5px;
+
+        display: flex;
+      }
+
+      .seekbar-segment {
+        height: 100%;
+        opacity: 1;
+        background: #fff;
+        width: calc(20% - 4px);
+        margin-right: 4px;
+        cursor: pointer;
+      }
+
+      .seekbar-active {
+        background: red;
+        opacity: 1;
+        width: 20%;
+      }
+
+      .seekbar-container::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        left: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="seekbar-container">
+      <div class="seekbar-segment" style="display: flex">
+        <div class="seekbar-active" style="width: 100%"></div>
+      </div>
+      <div class="seekbar-segment"></div>
+      <div class="seekbar-segment"></div>
+      <div class="seekbar-segment"></div>
+      <div class="seekbar-segment"></div>
+    </div>
+  </body>
+</html>
