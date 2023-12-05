@@ -2,153 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- External Styles -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.7/video-js.min.css"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.7/video-js.min.css"
     />
-    <style>
-      .btn {
-        padding: 0.5rem 0.8rem;
-        width: fit-content;
-        border: none;
-        border-radius: 5px;
-        transition: 100ms linear;
-      }
-      .someclass {
-        position: absolute;
-        margin-left: 74px;
-        visibility: visible;
-        transition:
-          visibility 0.3s,
-          opacity 0.3s;
-      }
-
-      .chapter-break {
-        margin: 0;
-        padding: 0;
-        height: 100% !important;
-        background-color: transparent;
-        border-left: 3px solid #1b1b1b !important;
-        position: absolute;
-        z-index: 1;
-      }
-
-      .chapter-break:hover {
-        background-color: #ffffff;
-      }
-      .chapter-break:hover .someclass {
-        visibility: hidden !important;
-        opacity: 0;
-      }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.7/video.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-eme@3.8.0/dist/videojs-contrib-eme.js"></script>
+    <link rel="stylesheet" href="styles.css" />
 
     <title>Test VideJS DRM</title>
   </head>
   <body>
-    <div style="margin: 50px auto">
+    <div class="video-container">
       <video id="my-video" class="video-js"></video>
     </div>
 
-    <script>
-      var chapters = [
-        { title: "chapter 1", start: 0, end: 30 },
-        {
-          title: "chapter 3",
-          start: 30,
-          end: 100,
-        },
-        {
-          title: "chapter 4",
-          start: 100,
-          end: 155,
-        },
-        {
-          title: "chapter 5",
-          start: 155,
-          end: 170,
-        },
-        {
-          title: "chapter 6",
-          start: 170,
-          end: 190,
-        },
-        {
-          title: "chapter 7",
-          start: 190,
-          end: 210,
-        },
-      ];
-      var player = videojs(
-        "my-video",
-        {
-          controls: true,
-          fluid: true,
-          html5: {
-            vhs: {
-              overrideNative: true,
-            },
-          },
-        },
-        function () {
-          var player = this;
-          player.eme();
-
-          player.src({
-            src: "https://cdn.bitmovin.com/content/assets/art-of-motion_drm/mpds/11331.mpd",
-            type: "application/dash+xml",
-            keySystems: {
-              "com.widevine.alpha":
-                "https://cwip-shaka-proxy.appspot.com/no_auth",
-            },
-          });
-
-          player.ready(function () {
-            player.on("loadedmetadata", function () {
-              const duration = player.duration();
-              const seekbar = player.controlBar.progressControl.seekBar;
-              const controlbar = player.controlBar;
-              // Create a new span element
-              var newSpan = document.createElement("span");
-              newSpan.className = "someclass"; // Set the class name
-              var textNode = document.createTextNode("Hello world");
-              newSpan.appendChild(textNode);
-              controlbar.el().appendChild(newSpan);
-              // Create a text node with the content "Hello world"
-              var textNode = document.createTextNode("Hello world");
-              chapters.forEach((chapter) => {
-                const chapterSpan = document.createElement("span");
-                chapterSpan.classList.add("chapter-break");
-
-                const chapterWidth =
-                  ((chapter.end - chapter.start) / duration) * 100;
-                const chapterLeft = (chapter.start / duration) * 100;
-
-                chapterSpan.style.width = `${chapterWidth}%`;
-                chapterSpan.style.left = `${chapterLeft}%`;
-
-                seekbar.el().appendChild(chapterSpan);
-              });
-            });
-
-            player.tech(true).on("keystatuschange", function (event) {
-              //console.log("event: ", event);
-            });
-          });
-        },
-      );
-      player.on("timeupdate", () => {
-        console.log(player.currentTime());
-        console.log();
-        var elements = document.getElementsByClassName("box");
-        console.log(elements);
-        console.log(player.controlBar);
-      });
-    </script>
+    <!-- External Scripts -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.11.7/video.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/videojs-contrib-eme@3.8.0/dist/videojs-contrib-eme.js"
+      defer
+    ></script>
+    <script src="scripts.js" defer></script>
   </body>
 </html>
