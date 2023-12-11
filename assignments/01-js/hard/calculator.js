@@ -16,6 +16,23 @@
   Once you've implemented the logic, test your code by running
 */
 
+function operation(num1, num2, operator) {
+  switch (operator) {
+    case "+":
+      return num1 + num2;
+    case "-":
+      return num1 - num2;
+    case "*":
+      return num1 * num2;
+    case "/":
+      if (num2 == 0) {
+        throw err;
+      }
+      return num1 / num2;
+    default:
+      break;
+  }
+}
 class Calculator {
   constructor() {
     this.result = 0;
@@ -41,32 +58,23 @@ class Calculator {
   getResult() {
     return this.result;
   }
-  evaluate(str) {
-    console.log(str);
-    let result = 0;
-    let start = 0;
-    const length = str.length;
-    let tempstr = "";
-    let expression = "";
-    while (start < length) {
-      if (str[start] >= "0" && str[start] <= "9") {
-        console.log(str[start], length);
-        tempstr += str[start];
-      } else {
-        console.log(tempstr, "oahgoeh");
-        const temp = parseInt(tempstr, 10);
-        if (expression === "") {
-          result = temp;
-        }
-        tempstr = "";
-      }
-      start += 1;
-    }
-    const lastIndex = str.lastIndexOf(")");
-  }
+
   calculate(str) {
-    str = str.split(" ").join("");
-    this.evaluate(str);
+    //1st way
+    const cleanedExpression = str.replace(/\s+/g, "");
+    const isValidExpression = /^[0-9+\-*/(). ]+$/.test(cleanedExpression);
+    if (!isValidExpression) {
+      throw new Error("Invalid input expression");
+    }
+
+    try {
+      this.result = eval(cleanedExpression);
+      if (this.result == "Infinity") {
+        throw new Error("undefined");
+      }
+    } catch (error) {
+      throw new Error("Invalid arithmetic expression");
+    }
   }
 }
 
